@@ -17,22 +17,23 @@ namespace Abc.Infra {
 
         protected FilteredRepository(DbContext c, DbSet<TData> s) : base(c, s) { }
 
-        protected internal override IQueryable<TData> createSqlQuery() {
+        protected internal override IQueryable<TData> createSqlQuery() 
+        {
             var query = base.createSqlQuery();
-            query = addFiltering(query);
-            query = addFixedFiltering(query);
+            query = AddFiltering(query);
+            query = AddFixedFiltering(query);
 
             return query;
         }
-        private IQueryable<TData> addFixedFiltering(IQueryable<TData> query)
+        internal IQueryable<TData> AddFixedFiltering(IQueryable<TData> query)
         {
-            var expression = createFixedWhereExpression();
+            var expression = CreateFixedWhereExpression();
             return expression is null ? query : query.Where(expression);
         }
-        private Expression<Func<TData, bool>> createFixedWhereExpression()
+        internal Expression<Func<TData, bool>> CreateFixedWhereExpression()
         {
-            if (FixedFilter is null) return null;
-            if (FixedValue is null) return null;
+            if (string.IsNullOrWhiteSpace(FixedValue)) return null;
+            if (string.IsNullOrWhiteSpace(FixedFilter)) return null;
             var param = Expression.Parameter(typeof(TData), "s");
 
             var p = typeof(TData).GetProperty(FixedFilter);
@@ -50,14 +51,17 @@ namespace Abc.Infra {
             return Expression.Lambda<Func<TData, bool>>(predicate, param);
         }
 
-        internal IQueryable<TData> addFiltering(IQueryable<TData> query) {
+        internal IQueryable<TData> AddFiltering(IQueryable<TData> query)
+        {
             if (string.IsNullOrEmpty(SearchString)) return query;
-            var expression = createWhereExpression();
+            var expression = CreateWhereExpression();
 
-            return query.Where(expression);
+            return expression is null ? query : query.Where(expression);
         }
 
-        internal Expression<Func<TData, bool>> createWhereExpression() {
+        internal Expression<Func<TData, bool>> CreateWhereExpression()
+        {
+            if (string.IsNullOrWhiteSpace(SearchString)) return null;
             var param = Expression.Parameter(typeof(TData), "s");
 
             Expression predicate = null;
