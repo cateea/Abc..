@@ -17,9 +17,9 @@ namespace Abc.Infra {
 
         protected FilteredRepository(DbContext c, DbSet<TData> s) : base(c, s) { }
 
-        protected internal override IQueryable<TData> createSqlQuery() 
+        protected internal override IQueryable<TData> CreateSqlQuery() 
         {
-            var query = base.createSqlQuery();
+            var query = base.CreateSqlQuery();
             query = AddFiltering(query);
             query = AddFixedFiltering(query);
 

@@ -15,10 +15,10 @@ namespace Abc.Tests.Infra
         SortedRepository<Measure, MeasureData>>
     {
 
-        private class testClass : FilteredRepository<Measure, MeasureData>
+        private class TestClass : FilteredRepository<Measure, MeasureData>
         {
 
-            public testClass(DbContext c, DbSet<MeasureData> s) : base(c, s) { }
+            public TestClass(DbContext c, DbSet<MeasureData> s) : base(c, s) { }
 
             protected internal override Measure toDomainObject(MeasureData d) => new Measure(d);
 
@@ -40,7 +40,7 @@ namespace Abc.Tests.Infra
                 .UseInMemoryDatabase("TestDb")
                 .Options;
             var c = new QuantityDbContext(options);
-            obj = new testClass(c, c.Measures);
+            obj = new TestClass(c, c.Measures);
         }
 
         [TestMethod] public void SearchStringTest()
@@ -54,13 +54,13 @@ namespace Abc.Tests.Infra
 
         [TestMethod] public void CreateSqlQueryTest()
         {
-            var sql = obj.createSqlQuery();
+            var sql = obj.CreateSqlQuery();
             Assert.IsNotNull(sql);
         }
 
         [TestMethod] public void AddFixedFilteringTest()
         {
-            var sql = obj.createSqlQuery();
+            var sql = obj.CreateSqlQuery();
             var fixedFilter = GetMember.Name<MeasureData>(x => x.Definition);
             obj.FixedFilter = fixedFilter;
             var fixedValue = GetRandom.String();
@@ -101,7 +101,7 @@ namespace Abc.Tests.Infra
         [TestMethod]
         public void AddFilteringTest()
         {
-            var sql = obj.createSqlQuery();
+            var sql = obj.CreateSqlQuery();
             var searchString = GetRandom.String();
             obj.SearchString = searchString;
             var sqlNew = obj.AddFiltering(sql);

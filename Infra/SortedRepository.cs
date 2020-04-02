@@ -17,8 +17,8 @@ namespace Abc.Infra {
 
         protected SortedRepository(DbContext c, DbSet<TData> s) : base(c, s) { }
 
-        protected internal override IQueryable<TData> createSqlQuery() {
-            var query = base.createSqlQuery();
+        protected internal override IQueryable<TData> CreateSqlQuery() {
+            var query = base.CreateSqlQuery();
             query = addSorting(query);
 
             return query;
