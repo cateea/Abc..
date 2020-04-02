@@ -1,0 +1,25 @@
+﻿@{
+    Layout = "_Layout";
+    ViewData["Title"] = Model.PageTitle;
+    var itemId = Model.ItemId;
+}
+
+<p>
+    <h1>@ViewData["Title"]</h1>
+</p>
+
+<div>
+    <h4>Details</h4>
+    <hr />
+    <dl class="row">
+        @RenderBody()
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@itemId">Edit</a> |
+    <a asp-page="./Index"
+       asp-route-fixedFilter="@Model.FixedFilter"
+       asp-route-FixedValue="@Model.FixedValue"
+    >Back to full List</a>
+    @RenderSection("Details")
+</div>

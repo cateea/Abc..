@@ -1,0 +1,15 @@
+﻿@page
+@using Abc.Pages.Extensions
+@model Abc.Soft.Areas.Quantity.Pages.Measures.DeleteModel
+
+@{
+    Layout = "_Delete";
+}
+
+<body>
+    @Html.DisplayControlsFor(m => m.Item.Code)
+    @Html.DisplayControlsFor(m => m.Item.Name)
+    @Html.DisplayControlsFor(m => m.Item.Definition)
+    @Html.DisplayControlsFor(m => m.Item.ValidFrom)
+    @Html.DisplayControlsFor(m => m.Item.ValidTo)
+</body>
