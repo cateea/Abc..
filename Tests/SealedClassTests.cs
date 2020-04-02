@@ -6,10 +6,8 @@ namespace Abc.Tests {
 
  
         [TestMethod]
-        public void IsSealed()
-        {
-            Assert.IsTrue(type.IsSealed);
-        }
+        public void IsSealed() => Assert.IsTrue(type.IsSealed);
+        
 
 
     }

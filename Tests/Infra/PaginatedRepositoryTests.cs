@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.InteropServices.ComTypes;
 using System.Threading.Tasks;
 using Abc.Aids;
 using Abc.Data.Quantity;
@@ -40,7 +39,7 @@ namespace Abc.Tests.Infra
                 .Options;
             var c = new QuantityDbContext(options);
             obj = new TestClass(c, c.Measures);
-            count = GetRandom.UInt8(10, 30);
+            count = GetRandom.UInt8(20, 40);
             foreach (var p in c.Measures)
                 c.Entry(p).State = EntityState.Deleted;
             AddItems();
@@ -67,7 +66,8 @@ namespace Abc.Tests.Infra
                 Assert.AreEqual(expected, actual);
             }
             TestNextPage(0, true);
-            TestNextPage(GetRandom.Int32(1, obj.TotalPages-1), true);
+            TestNextPage(1, true);
+            TestNextPage(GetRandom.Int32(2, obj.TotalPages-1), true);
             TestNextPage(obj.TotalPages, false);
         }
 
@@ -80,7 +80,9 @@ namespace Abc.Tests.Infra
                 Assert.AreEqual(expected, actual);
             }
             TestPreviousPage(0, false);
-            TestPreviousPage(GetRandom.Int32(1, obj.TotalPages-1), true);
+            TestPreviousPage(1, false);
+            TestPreviousPage(2, true);
+            TestPreviousPage(GetRandom.Int32(2, obj.TotalPages), true);
             TestPreviousPage(obj.TotalPages, true);
         }
 

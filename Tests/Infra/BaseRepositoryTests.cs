@@ -15,10 +15,10 @@ namespace Abc.Tests.Infra
     {
         private MeasureData data;
 
-        private class testClass : BaseRepository<Measure, MeasureData>
+        private class TestClass : BaseRepository<Measure, MeasureData>
         {
 
-            public testClass(DbContext c, DbSet<MeasureData> s) : base(c, s) { }
+            public TestClass(DbContext c, DbSet<MeasureData> s) : base(c, s) { }
 
             protected internal override Measure toDomainObject(MeasureData d) => new Measure(d);
 
@@ -40,7 +40,7 @@ namespace Abc.Tests.Infra
                 .UseInMemoryDatabase("TestDb")
                 .Options;
             var c = new QuantityDbContext(options);
-            obj = new testClass(c, c.Measures);
+            obj = new TestClass(c, c.Measures);
             data = GetRandom.Object<MeasureData>();
         }
 
