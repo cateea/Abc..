@@ -16,6 +16,11 @@ namespace Abc.Tests {
             Assert.AreEqual(typeof(TBaseClass), type.BaseType);
         }
 
+        protected virtual Type GetBaseClass()
+        {
+            return typeof(TBaseClass);
+        }
+
         protected static void isNullableProperty<T>(Func<T> get, Action<T> set) {
             isProperty(get, set);
             set(default);
@@ -38,6 +43,24 @@ namespace Abc.Tests {
             Assert.AreEqual(expected, actual);
         }
 
+        protected static void isNullableProperty(object o, string name, Type type)
+        {
+            var property = o.GetType().GetProperty(name);
+            Assert.IsNotNull(property);
+            Assert.AreEqual(type, property.PropertyType);
+            Assert.IsTrue(property.CanWrite);
+            Assert.IsTrue(property.CanRead);
+            property.SetValue(o, null);
+            var actual = property.GetValue(o);
+            Assert.AreEqual(null, actual);
+        }
+
+        protected static void isPropertyTypeOf(object o, string name, Type expected)
+        {
+            var property = o.GetType().GetProperty(name);
+            Assert.IsNotNull(property);
+            Assert.AreEqual(expected, property.PropertyType);
+        }
     }
 
 }
